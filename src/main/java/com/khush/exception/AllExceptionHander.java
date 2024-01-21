@@ -15,4 +15,11 @@ public class AllExceptionHander {
 		return new ResponseEntity<>(notFoundException.getLocalizedMessage(),HttpStatus.NOT_FOUND);
 		
 	}
+	@ExceptionHandler(DoctorNotFoundException.class)
+	public ResponseEntity<String>DoctorNotFoundExceptionHandeler(DoctorNotFoundException doctorNotFoundException){
+		
+		
+		return new ResponseEntity<String>(doctorNotFoundException.getLocalizedMessage(),HttpStatus.NOT_FOUND);
+		
+	}
 }
