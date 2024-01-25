@@ -79,5 +79,12 @@ public class AppointmentController {
 	    List<Appointment> appointments = appointmentsService.getAppointmentsByDoctor(doctor);
 	    return new ResponseEntity<>(appointments, HttpStatus.OK);
 	}
+	@GetMapping("/getByPatient/{patientId}")
+	public ResponseEntity<List<Appointment>>getAppointmentsByPatient(@PathVariable Long patientId) {
+		
+		List<Appointment>appointments=appointmentsService.getAppointmentsByPatient(patientId);
+		return new ResponseEntity<List<Appointment>>(appointments,HttpStatus.OK);
+		
+	}
 
 }

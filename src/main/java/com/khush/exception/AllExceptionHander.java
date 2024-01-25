@@ -36,4 +36,11 @@ public class AllExceptionHander {
 		return new ResponseEntity<String>(appointmentNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
 
 	}
+
+	@ExceptionHandler(MedicalRecordNotFoundException.class)
+	public ResponseEntity<String> MedicalRecordNotFoundExceptionHandlar(
+			MedicalRecordNotFoundException medicalRecordNotFoundException) {
+		return new ResponseEntity<String>(medicalRecordNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+
+	}
 }

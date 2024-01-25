@@ -57,47 +57,51 @@ public class AppointmentsService {
 	}
 
 	public void cancelAppointment(Long id) {
-		Optional<Appointment>optional=appointmentsRepository.findById(id);
-		
-		if(optional.isPresent()) {
-			Appointment appointment=optional.get();
-			
+		Optional<Appointment> optional = appointmentsRepository.findById(id);
+
+		if (optional.isPresent()) {
+			Appointment appointment = optional.get();
+
 			appointmentsRepository.delete(appointment);
-		}else {
+		} else {
 			throw new AppointmentNotFoundException("Appointment not found with ID");
 		}
-		
+
 	}
 
 	public Appointment updateAppointment(Long id, Appointment appointment) {
-	Optional<Appointment>optionalAppointment=appointmentsRepository.findById(id);
-	if(optionalAppointment.isPresent()) {
-		
-		
-		Appointment existingAppointment = optionalAppointment.get();
+		Optional<Appointment> optionalAppointment = appointmentsRepository.findById(id);
+		if (optionalAppointment.isPresent()) {
 
-        // Update fields from the provided appointment
-        existingAppointment.setAppointmentDateTime(appointment.getAppointmentDateTime());
-        existingAppointment.setPatient(appointment.getPatient());
-        existingAppointment.setDoctor(appointment.getDoctor());
-        existingAppointment.setAppointmentType(appointment.getAppointmentType());
-        existingAppointment.setLocation(appointment.getLocation());
-        existingAppointment.setNotes(appointment.getNotes());
-        
-        return appointmentsRepository.save(existingAppointment);
+			Appointment existingAppointment = optionalAppointment.get();
 
-		
-	}else {
-		throw new AppointmentNotFoundException("Appointment not found with ID: " + id);
+			// Update fields from the provided appointment
+			existingAppointment.setAppointmentDateTime(appointment.getAppointmentDateTime());
+			existingAppointment.setPatient(appointment.getPatient());
+			existingAppointment.setDoctor(appointment.getDoctor());
+			existingAppointment.setAppointmentType(appointment.getAppointmentType());
+			existingAppointment.setLocation(appointment.getLocation());
+			existingAppointment.setNotes(appointment.getNotes());
+
+			return appointmentsRepository.save(existingAppointment);
+
+		} else {
+			throw new AppointmentNotFoundException("Appointment not found with ID: " + id);
+		}
+
 	}
-	
-	}
-
-	
 
 	public List<Appointment> getAppointmentsByDoctor(Doctor doctor) {
-		
+
 		return appointmentsRepository.findByDoctor(doctor);
+	}
+
+	public List<Appointment> getAppointmentsByPatient(Long patientId) {
+		List<Appointment> appointments = appointmentsRepository.findByPatientId(patientId);
+		if (!appointments.isEmpty()) {
+			return appointments;
+		}
+		throw new AppointmentNotFoundException("AppiontMent Not Found With this PatientId  :" + patientId);
 	}
 
 }
