@@ -1,5 +1,7 @@
 package com.khush.controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +24,13 @@ public class MedicalRecordController {
     public ResponseEntity<List<MedicalRecord>> getAllMedicalRecords() {
         List<MedicalRecord> allMedicalRecords = medicalRecordService.getAllMedicalRecords();
         return new ResponseEntity<>(allMedicalRecords, HttpStatus.OK);
+    }
+    @PostMapping("/create")
+    public ResponseEntity<MedicalRecord>createMedicalRecord(@RequestBody MedicalRecord medicalRecord){
+    	
+    	MedicalRecord medicalRecord2=medicalRecordService.createMedicalRecord(medicalRecord);
+    	
+		return new ResponseEntity<MedicalRecord>(medicalRecord2,HttpStatus.CREATED);
+    	
     }
 }

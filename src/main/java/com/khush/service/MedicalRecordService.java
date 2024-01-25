@@ -23,4 +23,12 @@ public class MedicalRecordService {
 		
 	}
 
+
+
+
+	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecord) {
+	
+		return medicalRecordRepository.save(medicalRecord);
+	}
+
 }
