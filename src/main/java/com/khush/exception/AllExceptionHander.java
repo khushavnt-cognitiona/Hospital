@@ -43,4 +43,10 @@ public class AllExceptionHander {
 		return new ResponseEntity<String>(medicalRecordNotFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
 
 	}
+
+	@ExceptionHandler(AdminNotFoundException.class)
+	public ResponseEntity<String> AdminNotFoundExceptionHandler(AdminNotFoundException adminNotFoundException) {
+		return new ResponseEntity<String>(adminNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+
+	}
 }
