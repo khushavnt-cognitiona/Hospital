@@ -19,10 +19,10 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<Admin> getAllAdmins() {
-
 		return adminRepository.findAll();
 	}
 
+	@Override
 	public Optional<Admin> getAdminById(Long id) {
 		Optional<Admin> adminOptional = adminRepository.findById(id);
 
@@ -35,36 +35,38 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin createAdmin(Admin admin) {
-
 		return adminRepository.save(admin);
 	}
 
 	@Override
 	public void deleteAdmin(Long id) {
-		
-		Optional<Admin>optional=adminRepository.findById(id);
-		
-		if(optional.isPresent()) {
-		
-		Admin admin=optional.get();
-		
-		adminRepository.deleteById(id);
+		Optional<Admin> optional = adminRepository.findById(id);
+
+		if (optional.isPresent()) {
+			adminRepository.deleteById(id);
+		} else {
+			throw new AdminNotFoundException("Admin with ID " + id + " not found");
 		}
-		throw new AdminNotFoundException("Hello Khushvant");
-		
 	}
-	
 
 	@Override
-	public Admin updateAdmin(Long id, Admin admin) {
-		// TODO Auto-generated method stub
-		return null;
+	public Admin updateAdmin(Long id, Admin adminDetails) {
+		Optional<Admin> optional = adminRepository.findById(id);
+
+		if (optional.isPresent()) {
+			Admin existingAdmin = optional.get();
+			existingAdmin.setName(adminDetails.getName());
+			existingAdmin.setUsername(adminDetails.getUsername());
+			existingAdmin.setPassword(adminDetails.getPassword());
+
+			return adminRepository.save(existingAdmin);
+		} else {
+			throw new AdminNotFoundException("Admin with ID " + id + " not found");
+		}
 	}
 
 	@Override
 	public List<Admin> getAdminsByRole(AdminRole role) {
-		// TODO Auto-generated method stub
-		return null;
+		return adminRepository.findByRole(role);
 	}
-
 }
